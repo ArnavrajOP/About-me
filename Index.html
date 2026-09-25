@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arnav | Personal Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0b0b10;
+            --bg-secondary: #13131a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-1: #7c3aed; /* Purple */
+            --accent-2: #ec4899; /* Pink */
+            --accent-3: #06b6d4; /* Cyan */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NEW: Tech Grid Background --- */
+        .bg-tech {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: var(--bg-primary);
+            background-image: 
+                linear-gradient(rgba(124, 58, 237, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.07) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 100%);
+        }
+
+        .bg-tech::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            animation: rotate-ambient 25s linear infinite;
+        }
+
+        @keyframes rotate-ambient {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- Top Banner --- */
+        .top-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 42px;
+            background: rgba(11, 11, 16, 0.85);
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            z-index: 102;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .top-banner i {
+            color: var(--accent-3);
+            margin-right: 8px;
+        }
+
+        .top-banner a {
+            color: var(--accent-2);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+            transition: color 0.3s;
+        }
+
+        .top-banner a:hover {
+            color: var(--accent-3);
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 42px; /* Adjusted for banner */
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 11, 16, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 101;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8rem 5% 6rem; /* Adjusted top padding for nav + banner */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+        }
+
+        .hero-greeting {
+            font-size: 1.2rem;
+            color: var(--accent-3);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-name {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tag {
+            padding: 0.5rem 1.2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            backdrop-filter: blur(5px);
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(124, 58, 237, 0.5);
+        }
+
+        /* About Section */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* --- NEW: Terminal Setup Card --- */
+        .terminal-card {
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 650px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .terminal-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-3);
+        }
+
+        .terminal-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-primary);
+        }
+
+        .prompt { color: var(--accent-3); margin-right: 8px; }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .spec-value {
+            color: var(--accent-2);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        /* Socials Section */
+        #socials {
+            margin-bottom: 2rem;
+        }
+
+        .socials-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .social-card {
+            flex: 1;
+            min-width: 250px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .social-icon {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .discord-icon { background: rgba(88, 101, 242, 0.2); color: #5865F2; }
+        .telegram-icon { background: rgba(38, 165, 217, 0.2); color: #26A5E4; }
+        .reddit-icon { background: rgba(255, 69, 0, 0.2); color: #FF4500; }
+
+        .social-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .social-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            margin-left: auto;
+            background: none;
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-1);
+            color: white;
+            border-color: var(--accent-1);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero-name {
+                font-size: 3rem;
+            }
+            .social-card {
+                min-width: 100%;
+            }
+            .top-banner {
+                font-size: 0.75rem;
+                height: 50px;
+            }
+            nav {
+                top: 50px;
+            }
+            section {
+                padding-top: 9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NEW: Tech Grid Background -->
+    <div class="bg-tech"></div>
+
+    <!-- NEW: Top Banner -->
+    <div class="top-banner">
+        <i class="fas fa-unlock-alt"></i>
+        Advocating for user freedom, customization, and open-source Android ecosystems. 
+        <a href="https://keepandroidopen.org" target="_blank">Keep Android Open</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Arnav.</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#setup">Setup</a></li>
+            <li><a href="#socials">Connect</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="fade-in">
+            <p class="hero-greeting">Welcome to my digital space</p>
+            <h1 class="hero-name">I'm Arnav</h1>
+            <div class="hero-tags">
+                <span class="tag">👨‍💻 Tech Enthusiast</span>
+                <span class="tag">🧠 Atheist</span>
+                <span class="tag">🎧 Music Lover</span>
+                <span class="tag">📺 Anime Fan</span>
+                <span class="tag">🚀 Teenager</span>
+            </div>
+            <a href="#socials" class="cta-btn">Let's Connect</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title fade-in">About Me</h2>
+        <div class="about-grid">
+            <div class="about-card fade-in">
+                <div class="card-icon"><i class="fas fa-microchip"></i></div>
+                <h3 class="card-title">Tech Enthusiast</h3>
+                <p class="card-text">Fascinated by how things work under the hood. I love exploring new technologies, software, and the ever-evolving digital landscape.</p>
+            </div>
+            <div class="about-card fade-in">
+                <div class="card-icon"><i class="fas fa-brain"></i></div>
+                <h3 class="card-title">Rational Mindset</h3>
+                <p class="card-text">As an atheist, I approach the world with curiosity, logic, and a reliance on science and reason to understand the universe around us.</p>
+            </div>
+            <div class="about-card fade-in">
+                <div class="card-icon"><i class="fas fa-headphones-alt"></i></div>
+                <h3 class="card-title">Anime & Music</h3>
+                <p class="card-text">When I'm not diving into tech, I'm probably watching the latest anime series or vibing to my music playlists. It's the perfect escape.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Setup Section -->
+    <section id="setup">
+        <h2 class="section-title fade-in">Current Setup</h2>
+        <div class="terminal-card fade-in">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="terminal-title">arnav@redmi9t:~</span>
+            </div>
+            <div class="terminal-body">
+                <p><span class="prompt">$</span> neofetch</p>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <span class="spec-label">Device</span>
+                        <span class="spec-value">Redmi 9t</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">ROM</span>
+                        <span class="spec-value">InfinityX 3.12</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Android</span>
+                        <span class="spec-value">16</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Root</span>
+                        <span class="spec-value">KernelSU (Ksu)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Recovery</span>
+                        <span class="spec-value">OrangeFox</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Socials Section -->
+    <section id="socials">
+        <h2 class="section-title fade-in">Find Me Online</h2>
+        <div class="socials-container">
+            <!-- Discord -->
+            <div class="social-card fade-in">
+                <div class="social-icon discord-icon"><i class="fab fa-discord"></i></div>
+                <div class="social-info">
+                    <h3>Discord</h3>
+                    <p id="discord-username">arnavhere__</p>
+                </div>
+                <button class="copy-btn" onclick="copyDiscord(event)">Copy</button>
+            </div>
+
+            <!-- Telegram -->
+            <a href="https://t.me/Arnav4473" target="_blank" class="social-card fade-in">
+                <div class="social-icon telegram-icon"><i class="fab fa-telegram-plane"></i></div>
+                <div class="social-info">
+                    <h3>Telegram</h3>
+                    <p>@Arnav4473</p>
+                </div>
+            </a>
+
+            <!-- Reddit -->
+            <a href="https://www.reddit.com/user/Arnav_Raj4473" target="_blank" class="social-card fade-in">
+                <div class="social-icon reddit-icon"><i class="fab fa-reddit-alien"></i></div>
+                <div class="social-info">
+                    <h3>Reddit</h3>
+                    <p>u/Arnav_Raj4473</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Arnav. Built with passion, code, and root access.</p>
+    </footer>
+
+    <script>
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Copy Discord Username Function
+        function copyDiscord(event) {
+            const username = document.getElementById('discord-username').innerText;
+            
+            navigator.clipboard.writeText(username).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerText;
+                
+                btn.innerText = 'Copied!';
+                btn.style.background = '#10b981';
+                btn.style.color = 'white';
+                btn.style.borderColor = '#10b981';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
